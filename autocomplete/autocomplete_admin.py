@@ -15,15 +15,15 @@ from django.utils.translation import ugettext as _
 
 # UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
 js_tuple = (
-    'https://github.com/django-extensions/django-extensions/blob/master/django_extensions/media/django_extensions/js/jquery.js',
-    'https://github.com/django-extensions/django-extensions/blob/master/django_extensions/media/django_extensions/js/jquery.bgiframe.min.js',
-    'https://github.com/django-extensions/django-extensions/blob/master/django_extensions/media/django_extensions/js/jquery.ajaxQueue.js',
-    'https://github.com/django-extensions/django-extensions/blob/master/django_extensions/media/django_extensions/js/jquery.autocomplete.js',
+    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.js',
+    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.bgiframe.min.js',
+    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.ajaxQueue.js',
+    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.autocomplete.js',
 )
 
 # UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
 css_dict = {
-    'all': ('https://github.com/django-extensions/django-extensions/blob/master/django_extensions/media/django_extensions/css/jquery.autocomplete.css',)
+    'all': ('https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/css/jquery.autocomplete.css',)
 }
 
 class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
