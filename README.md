@@ -12,7 +12,8 @@ Code examples
 -----
 Here's an example of how you would use wapo-django-autocomplete to create an autocomplete field on a foreign key field.
 
-models.py:
+**models.py:**
+    
     class Bar(models.Model):
         name = models.CharField(max_length=255)
         ...
@@ -27,7 +28,8 @@ models.py:
         baz = models.ForeignKey(Baz)
         ...
 
-admin.py
+**admin.py**
+    
     class FooAdmin(NoLookupsForeignKeyAutocompleteAdmin):
         model = Foo
         related_search_fields = {
