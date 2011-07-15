@@ -187,10 +187,10 @@ class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
             kwargs['widget'] = widget_class(db_field.rel, self.related_search_fields[db_field.name])
             kwargs['help_text'] = help_text
-        return super(FkAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        return super(ForeignKeyAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
     def get_urls(self):
-        urls = super(FkAutocompleteAdmin, self).get_urls()
+        urls = super(ForeignKeyAutocompleteAdmin, self).get_urls()
         search_url = patterns('',
             (r'^foreignkey_autocomplete/$', self.admin_site.admin_view(self.foreignkey_autocomplete))
         )
