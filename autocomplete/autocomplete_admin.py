@@ -40,7 +40,13 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
         obj = self.rel.to._default_manager.get(**{key: value})
         return truncate_words(obj, 14)
     
-    def render(self, name, value, template_name, attrs=None):
+
+class ForeignKeySearchWidget(BaseAutocompleteWidget):    
+    def __init__(self, rel, search_fields, attrs=None):
+        self.search_fields = search_fields
+        super(ForeignKeySearchWidget, self).__init__(rel, attrs)
+    
+    def render(self, name, value, attrs=None):
         if attrs is None:
             attrs = {}
         opts = self.rel.to._meta
@@ -71,34 +77,98 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
             'name': name,
         }
         output.append(render_to_string(self.widget_template or (
-            '%s/%s/%s' % (app_label, model_name, template_name),
-            '%s/%s' % (app_label, template_name),
-            'admin/autocomplete/%s' % template_name,
+            '%s/%s/%s' % (app_label, model_name, 'fk_widget.html'),
+            '%s/%s' % (app_label, 'fk_widget.html'),
+            'admin/autocomplete/%s' % 'fk_widget.html',
         ), context))
         output.reverse()
         return mark_safe(u''.join(output))
-    
 
-class ForeignKeySearchWidget(BaseAutocompleteWidget):
-    template_name   = 'fk_widget.html'
-    
-    def __init__(self, rel, search_fields, attrs=None):
-        self.search_fields = search_fields
-        super(ForeignKeySearchWidget, self).__init__(rel, attrs)
-
-class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
-    template_name   = 'nolookups_fk_widget.html'
-    
+class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):    
     def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(NoLookupsForeignKeySearchWidget, self).__init__(rel, attrs)
+        
+    def render(self, name, value, attrs=None):
+        if attrs is None:
+            attrs = {}
+        opts = self.rel.to._meta
+        app_label = opts.app_label
+        model_name = opts.object_name.lower()
+        related_url = '../../../%s/%s/' % (app_label, model_name)
+        params = self.url_parameters()
+        if params:
+            url = '?' + '&amp;'.join(['%s=%s' % (k, v) for k, v in params.items()])
+        else:
+            url = ''
+        if not attrs.has_key('class'):
+            attrs['class'] = 'vForeignKeyRawIdAdminField'
+        output = [forms.TextInput.render(self, name, value, attrs)]
+        if value:
+            label = self.label_for_value(value)
+        else:
+            label = u''
+        context = {
+            'url': url,
+            'related_url': related_url,
+            'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
+            'search_path': self.search_path,
+            'search_fields': ','.join(self.search_fields),
+            'model_name': model_name,
+            'app_label': app_label,
+            'label': label,
+            'name': name,
+        }
+        output.append(render_to_string(self.widget_template or (
+            '%s/%s/%s' % (app_label, model_name, 'nolookups_fk_widget.html'),
+            '%s/%s' % (app_label, 'nolookups_fk_widget.html'),
+            'admin/autocomplete/%s' % 'nolookups_fk_widget.html',
+        ), context))
+        output.reverse()
+        return mark_safe(u''.join(output))
 
-class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
-    template_name   = 'inline_widget.html'
-    
+class InlineForeignKeySearchWidget(BaseAutocompleteWidget):    
     def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(InlineForeignKeySearchWidget, self).__init__(rel, attrs)
+        
+    def render(self, name, value, attrs=None):
+        if attrs is None:
+            attrs = {}
+        opts = self.rel.to._meta
+        app_label = opts.app_label
+        model_name = opts.object_name.lower()
+        related_url = '../../../%s/%s/' % (app_label, model_name)
+        params = self.url_parameters()
+        if params:
+            url = '?' + '&amp;'.join(['%s=%s' % (k, v) for k, v in params.items()])
+        else:
+            url = ''
+        if not attrs.has_key('class'):
+            attrs['class'] = 'vForeignKeyRawIdAdminField'
+        output = [forms.TextInput.render(self, name, value, attrs)]
+        if value:
+            label = self.label_for_value(value)
+        else:
+            label = u''
+        context = {
+            'url': url,
+            'related_url': related_url,
+            'admin_media_prefix': settings.ADMIN_MEDIA_PREFIX,
+            'search_path': self.search_path,
+            'search_fields': ','.join(self.search_fields),
+            'model_name': model_name,
+            'app_label': app_label,
+            'label': label,
+            'name': name,
+        }
+        output.append(render_to_string(self.widget_template or (
+            '%s/%s/%s' % (app_label, model_name, 'inline_widget.html'),
+            '%s/%s' % (app_label, 'inline_widget.html'),
+            'admin/autocomplete/%s' % 'inline_widget.html',
+        ), context))
+        output.reverse()
+        return mark_safe(u''.join(output))
 
 class BaseAutocompleteAdminMixin(object):
     related_search_fields = {}
