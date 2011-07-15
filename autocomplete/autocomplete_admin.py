@@ -23,7 +23,7 @@ js_tuple = (
 
 # UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
 css_dict = {
-    'all': ('https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/css/jquery.autocomplete.css',)
+    'all': ('http://wapo-projects.s3.amazonaws.com/admin/wapo-django-autocomplete/css/django-autocomplete.css',)
 }
 
 class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
@@ -31,9 +31,9 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
     search_path = '../foreignkey_autocomplete/'
     
     class Media:
-        css = css_dict
-        js = js_tuple
-        abstract = True
+        css             = css_dict
+        js              = js_tuple
+        abstract        = True
     
     def label_for_value(self, value):
         key = self.rel.get_related_field().name
