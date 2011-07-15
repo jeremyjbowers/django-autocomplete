@@ -35,10 +35,6 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
         js = js_tuple
         abstract = True
     
-    def __init__(self, rel, search_fields, class_name, attrs=None):
-        self.search_fields = search_fields
-        super(class_name, self).__init__(rel, attrs)
-    
     def label_for_value(self, value):
         key = self.rel.get_related_field().name
         obj = self.rel.to._default_manager.get(**{key: value})
@@ -47,7 +43,6 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
     def render(self, name, value, template_name, class_name, attrs=None):
         if attrs is None:
             attrs = {}
-        output = [super(class_name, self).render(name, value, attrs)]
         opts = self.rel.to._meta
         app_label = opts.app_label
         model_name = opts.object_name.lower()
@@ -86,15 +81,24 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
 
 class ForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'fk_widget.html'
-    class_name      = ForeignKeySearchWidget
+    
+    def __init__(self, rel, search_fields, class_name, attrs=None):
+        self.search_fields = search_fields
+        super(ForeignKeySearchWidget, self).__init__(rel, attrs)
 
 class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'nolookups_fk_widget.html'
-    class_name      = NoLookupsForeignKeySearchWidget
+    
+    def __init__(self, rel, search_fields, class_name, attrs=None):
+        self.search_fields = search_fields
+        super(NoLookupsForeignKeySearchWidget, self).__init__(rel, attrs)
 
 class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'inline_widget.html'
-    class_name      = InlineForeignKeySearchWidget
+    
+    def __init__(self, rel, search_fields, class_name, attrs=None):
+        self.search_fields = search_fields
+        super(InlineForeignKeySearchWidget, self).__init__(rel, attrs)
 
 class BaseAutocompleteAdminMixin(object):
     related_search_fields = {}
@@ -177,7 +181,11 @@ class BaseAutocompleteAdminMixin(object):
             return _('Use the left field to do %(model_name)s lookups in the fields %(field_list)s.') % help_kwargs
         return ''
     
-    def formfield_for_dbfield(self, db_field, widget_class, class_name, **kwargs):
+
+class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
+    widget_class    = ForeignKeySearchWidget
+    
+    def formfield_for_dbfield(self, db_field, widget_class, **kwargs):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
@@ -186,18 +194,35 @@ class BaseAutocompleteAdminMixin(object):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
             kwargs['widget'] = widget_class(db_field.rel, self.related_search_fields[db_field.name])
             kwargs['help_text'] = help_text
-        return super(class_name, self).formfield_for_dbfield(db_field, **kwargs)
+        return super(FkAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
-
-class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
-    widget_class    = ForeignKeySearchWidget
-    class_name      = FkAutocompleteAdmin
 
 class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
     widget_class    = NoLookupsForeignKeySearchWidget
-    class_name      = NoLookupsForeignKeyAutocompleteAdmin
+    
+    def formfield_for_dbfield(self, db_field, widget_class, **kwargs):
+        if (isinstance(db_field, models.ForeignKey) and 
+            db_field.name in self.related_search_fields):
+            model_name = db_field.rel.to._meta.object_name
+            help_text = self.get_help_text(db_field.name, model_name)
+            if kwargs.get('help_text'):
+                help_text = u'%s %s' % (kwargs['help_text'], help_text)
+            kwargs['widget'] = widget_class(db_field.rel, self.related_search_fields[db_field.name])
+            kwargs['help_text'] = help_text
+        return super(NoLookupsForeignKeyAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+    
 
 class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):
     widget_class    = InlineForeignKeySearchWidget
-    class_name      = InlineAutocompleteAdmin
+    
+    def formfield_for_dbfield(self, db_field, widget_class, **kwargs):
+        if (isinstance(db_field, models.ForeignKey) and 
+            db_field.name in self.related_search_fields):
+            model_name = db_field.rel.to._meta.object_name
+            help_text = self.get_help_text(db_field.name, model_name)
+            if kwargs.get('help_text'):
+                help_text = u'%s %s' % (kwargs['help_text'], help_text)
+            kwargs['widget'] = widget_class(db_field.rel, self.related_search_fields[db_field.name])
+            kwargs['help_text'] = help_text
+        return super(InlineAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
