@@ -40,7 +40,7 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
         obj = self.rel.to._default_manager.get(**{key: value})
         return truncate_words(obj, 14)
     
-    def render(self, name, value, template_name, class_name, attrs=None):
+    def render(self, name, value, template_name, attrs=None):
         if attrs is None:
             attrs = {}
         opts = self.rel.to._meta
@@ -82,21 +82,21 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
 class ForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'fk_widget.html'
     
-    def __init__(self, rel, search_fields, class_name, attrs=None):
+    def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(ForeignKeySearchWidget, self).__init__(rel, attrs)
 
 class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'nolookups_fk_widget.html'
     
-    def __init__(self, rel, search_fields, class_name, attrs=None):
+    def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(NoLookupsForeignKeySearchWidget, self).__init__(rel, attrs)
 
 class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
     template_name   = 'inline_widget.html'
     
-    def __init__(self, rel, search_fields, class_name, attrs=None):
+    def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(InlineForeignKeySearchWidget, self).__init__(rel, attrs)
 
@@ -114,13 +114,6 @@ class BaseAutocompleteAdminMixin(object):
                 key, val = bit[1:].split('=')
                 queryset = queryset.filter(**{key: val})
         return queryset
-    
-    def get_urls(self):
-        urls = super(class_name, self).get_urls()
-        search_url = patterns('',
-            (r'^foreignkey_autocomplete/$', self.admin_site.admin_view(self.foreignkey_autocomplete))
-        )
-        return search_url + urls
     
     def foreignkey_autocomplete(self, request):
         query = request.GET.get('q', None)
@@ -196,6 +189,12 @@ class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
             kwargs['help_text'] = help_text
         return super(FkAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
+    def get_urls(self):
+        urls = super(FkAutocompleteAdmin, self).get_urls()
+        search_url = patterns('',
+            (r'^foreignkey_autocomplete/$', self.admin_site.admin_view(self.foreignkey_autocomplete))
+        )
+        return search_url + urls
 
 class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
     widget_class    = NoLookupsForeignKeySearchWidget
@@ -211,6 +210,12 @@ class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.Mod
             kwargs['help_text'] = help_text
         return super(NoLookupsForeignKeyAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
+    def get_urls(self):
+        urls = super(NoLookupsForeignKeyAutocompleteAdmin, self).get_urls()
+        search_url = patterns('',
+            (r'^foreignkey_autocomplete/$', self.admin_site.admin_view(self.foreignkey_autocomplete))
+        )
+        return search_url + urls
 
 class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):
     widget_class    = InlineForeignKeySearchWidget
@@ -226,3 +231,9 @@ class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):
             kwargs['help_text'] = help_text
         return super(InlineAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
+    def get_urls(self):
+        urls = super(InlineAutocompleteAdmin, self).get_urls()
+        search_url = patterns('',
+            (r'^foreignkey_autocomplete/$', self.admin_site.admin_view(self.foreignkey_autocomplete))
+        )
+        return search_url + urls
