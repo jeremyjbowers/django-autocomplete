@@ -1,7 +1,8 @@
 wapo-django-autocomplete
 ========================
-Autocomplete is an installable app which overrides the raw ID widget with an autocomplete search box.
------------------------------------------------------
+wapo-django-autocomplete is an installable app which overrides the stock adminraw ID widget with an autocomplete search box. It has two interesting features over competing apps:
+* It limits/filters the search query that the autocomplete logic performs when matching the keyword. This limit/filter logic is on a per-field basis.
+* It works with inlines.
 
 Installation
 -------
