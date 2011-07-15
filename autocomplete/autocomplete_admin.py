@@ -251,11 +251,11 @@ class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
-            help_text = self.get_help_text(db_field.name, model_name)
+            # help_text = self.get_help_text(db_field.name, model_name)
             if kwargs.get('help_text'):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
             kwargs['widget'] = ForeignKeySearchWidget(db_field.rel, self.related_search_fields[db_field.name])
-            kwargs['help_text'] = help_text
+            # kwargs['help_text'] = help_text
         return super(ForeignKeyAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
     def get_urls(self):
@@ -270,11 +270,11 @@ class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.Mod
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
-            help_text = self.get_help_text(db_field.name, model_name)
+            # help_text = self.get_help_text(db_field.name, model_name)
             if kwargs.get('help_text'):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
             kwargs['widget'] = NoLookupsForeignKeySearchWidget(db_field.rel, self.related_search_fields[db_field.name])
-            kwargs['help_text'] = help_text
+            # kwargs['help_text'] = help_text
         return super(NoLookupsForeignKeyAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
     def get_urls(self):
@@ -289,11 +289,11 @@ class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
-            help_text = self.get_help_text(db_field.name, model_name)
+            # help_text = self.get_help_text(db_field.name, model_name)
             if kwargs.get('help_text'):
                 help_text = u'%s %s' % (kwargs['help_text'], help_text)
             kwargs['widget'] = InlineForeignKeySearchWidget(db_field.rel, self.related_search_fields[db_field.name])
-            kwargs['help_text'] = help_text
+            # kwargs['help_text'] = help_text
         return super(InlineAutocompleteAdmin, self).formfield_for_dbfield(db_field, **kwargs)
     
     def get_urls(self):
