@@ -265,7 +265,7 @@ class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
         return search_url + urls
 
 class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):    
-    def formfield_for_dbfield(self, db_field, widget_class, **kwargs):
+    def formfield_for_dbfield(self, db_field, **kwargs):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
@@ -284,7 +284,7 @@ class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.Mod
         return search_url + urls
 
 class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):    
-    def formfield_for_dbfield(self, db_field, widget_class, **kwargs):
+    def formfield_for_dbfield(self, db_field, **kwargs):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
             model_name = db_field.rel.to._meta.object_name
