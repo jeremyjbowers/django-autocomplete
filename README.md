@@ -4,6 +4,8 @@ Autocomplete is an installable app which overrides the raw ID widget with an aut
 
 Warning: wapo-django-autocomplete is probably broken
 -----------------------------------------------------
+EDIT: This appears to be working, according to the good folks at the Spokeman-Review.
+
 I won't know for sure if this is working for a little while. If you're installing this, you're probably either me or crazy.
 
 Code
