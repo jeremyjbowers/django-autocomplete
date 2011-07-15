@@ -178,14 +178,15 @@ class BaseAutocompleteAdminMixin(object):
     class Meta:
         abstract = True
     
-    def _restrict_queryset(queryset, search_fields):
-        for bit in search_fields.split(','):
-            if bit[0] == '#':
-                key, val = bit[1:].split('=')
-                queryset = queryset.filter(**{key: val})
-        return queryset
-    
     def foreignkey_autocomplete(self, request):
+        
+        def _restrict_queryset(queryset, search_fields):
+            for bit in search_fields.split(','):
+                if bit[0] == '#':
+                    key, val = bit[1:].split('=')
+                    queryset = queryset.filter(**{key: val})
+            return queryset
+        
         query = request.GET.get('q', None)
         app_label = request.GET.get('app_label', None)
         model_name = request.GET.get('model_name', None)
