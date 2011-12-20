@@ -8,9 +8,7 @@ wapo-django-autocomplete is an installable app which overrides the stock adminra
 Installation
 -------
 * The autocomplete templates need to be located by Django, so it's recommended that you add it to your installed apps.
-* It's recommended to install this as a git submodule in your existing app.
-
-You can also install from github using pip:
+* Install from github using pip:
     
     pip install -e git+git@github.com:jeremyjbowers/django-autocomplete.git#egg=autocomplete
 
