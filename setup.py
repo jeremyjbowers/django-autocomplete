@@ -2,7 +2,7 @@
 from distutils.core import setup
 
 setup(name='autocomplete',
-        version='0.1',
+        version='0.2',
         description='The Washington Post\'s app for creating admin foreign key autocompletion fields.',
         author='Jeremy Bowers',
         author_email='jeremyjbowers@gmail.com',
