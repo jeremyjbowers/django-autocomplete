@@ -13,6 +13,19 @@ from django.utils.safestring import mark_safe
 from django.utils.text import get_text_list, truncate_words
 from django.utils.translation import ugettext as _
 
+
+js_tuple = (
+    'js/jquery.js',
+    'js/jquery.bgiframe.min.js',
+    'js/jquery.ajaxQueue.js',
+    'js/jquery.autocomplete.js'
+)
+
+css_dict = {
+    'all': ('css/django-autocomplete.css',)
+}
+
+
 # UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
 js_tuple = (
     'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.js',
