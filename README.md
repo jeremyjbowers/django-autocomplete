@@ -43,6 +43,5 @@ Here's an example of how you would use wapo-django-autocomplete to create an aut
 
 Todos
 -----
-* Fix static media: Should be more organically connected to an app.
 * Test to make sure templates are properly installing.
 * Identify ways to customize returned items in the widget, e.g., limit to 10, alphabetize, etc.
