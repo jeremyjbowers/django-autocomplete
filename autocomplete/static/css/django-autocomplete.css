@@ -1,7 +1,7 @@
 /*****************************************************************************
  * jQuery autocomplete
  ****************************************************************************/
-.vForeignKeyRawIdAdminField {display:none;}
+.vForeignKeyRawIdHiddenAdminField {display:none;}
 .ac_results {
     padding: 0px;
     border: 1px solid #ccc;

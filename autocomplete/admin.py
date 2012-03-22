@@ -58,7 +58,7 @@ class ForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
@@ -101,7 +101,7 @@ class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
@@ -144,7 +144,7 @@ class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
