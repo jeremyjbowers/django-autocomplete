@@ -25,20 +25,6 @@ css_dict = {
     'all': ('css/django-autocomplete.css',)
 }
 
-
-# UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
-js_tuple = (
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.bgiframe.min.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.ajaxQueue.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.autocomplete.js',
-)
-
-# UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
-css_dict = {
-    'all': ('http://wapo-projects.s3.amazonaws.com/admin/wapo-django-autocomplete/css/django-autocomplete.css',)
-}
-
 class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
     widget_template = None
     search_path = '../foreignkey_autocomplete/'
