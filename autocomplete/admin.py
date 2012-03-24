@@ -13,17 +13,16 @@ from django.utils.safestring import mark_safe
 from django.utils.text import get_text_list, truncate_words
 from django.utils.translation import ugettext as _
 
-# UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
+
 js_tuple = (
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.bgiframe.min.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.ajaxQueue.js',
-    'https://github.com/django-extensions/django-extensions/raw/master/django_extensions/media/django_extensions/js/jquery.autocomplete.js',
+    'js/jquery.js',
+    'js/jquery.bgiframe.min.js',
+    'js/jquery.ajaxQueue.js',
+    'js/jquery.autocomplete.js'
 )
 
-# UPDATE THESE LATER WITH APPROPRIATE LOCATIONS
 css_dict = {
-    'all': ('http://wapo-projects.s3.amazonaws.com/admin/wapo-django-autocomplete/css/django-autocomplete.css',)
+    'all': ('css/django-autocomplete.css',)
 }
 
 class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
@@ -59,7 +58,7 @@ class ForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
@@ -102,7 +101,7 @@ class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
@@ -145,7 +144,7 @@ class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
         else:
             url = ''
         if not attrs.has_key('class'):
-            attrs['class'] = 'vForeignKeyRawIdAdminField'
+            attrs['class'] = 'vForeignKeyRawIdHiddenAdminField'
         output = [forms.TextInput.render(self, name, value, attrs)]
         if value:
             label = self.label_for_value(value)
