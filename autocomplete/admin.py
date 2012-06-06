@@ -40,7 +40,7 @@ class BaseAutocompleteWidget(ForeignKeyRawIdWidget):
         return truncate_words(obj, 14)
     
 
-class ForeignKeySearchWidget(BaseAutocompleteWidget):    
+class ForeignKeySearchWidget(BaseAutocompleteWidget):
     def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(ForeignKeySearchWidget, self).__init__(rel, attrs)
@@ -83,7 +83,7 @@ class ForeignKeySearchWidget(BaseAutocompleteWidget):
         output.reverse()
         return mark_safe(u''.join(output))
 
-class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):    
+class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
     def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(NoLookupsForeignKeySearchWidget, self).__init__(rel, attrs)
@@ -126,7 +126,7 @@ class NoLookupsForeignKeySearchWidget(BaseAutocompleteWidget):
         output.reverse()
         return mark_safe(u''.join(output))
 
-class InlineForeignKeySearchWidget(BaseAutocompleteWidget):    
+class InlineForeignKeySearchWidget(BaseAutocompleteWidget):
     def __init__(self, rel, search_fields, attrs=None):
         self.search_fields = search_fields
         super(InlineForeignKeySearchWidget, self).__init__(rel, attrs)
@@ -264,7 +264,7 @@ class ForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
         )
         return search_url + urls
 
-class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):    
+class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.ModelAdmin):
     def formfield_for_dbfield(self, db_field, **kwargs):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
@@ -283,7 +283,7 @@ class NoLookupsForeignKeyAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.Mod
         )
         return search_url + urls
 
-class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):    
+class InlineAutocompleteAdmin(BaseAutocompleteAdminMixin, admin.TabularInline):
     def formfield_for_dbfield(self, db_field, **kwargs):
         if (isinstance(db_field, models.ForeignKey) and 
             db_field.name in self.related_search_fields):
