@@ -10,8 +10,8 @@ setup(name='autocomplete',
         packages = ['autocomplete',],
         license = 'MIT',
         package_data = {'': [
-            'media/autocomplete/js/*.js',
-            'media/autocomplete/css/*.css',
+            'static/autocomplete/js/*.js',
+            'static/autocomplete/css/*.css',
             'templates/admin/autocomplete/*.html',
         ]},
         classifiers=[
